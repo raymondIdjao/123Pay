@@ -91,7 +91,7 @@ namespace _123PayMVC.Controllers
                 if(photo != null)
                 {
                     string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "images");
-                    newFileName = photo.FileName + "_" + Guid.NewGuid().ToString();
+                    newFileName = Guid.NewGuid().ToString() + "_" + photo.FileName;
                     string filePath = Path.Combine(uploadsFolder, newFileName);
                     photo.CopyTo(new FileStream(filePath, FileMode.Create));
                 }
@@ -126,7 +126,7 @@ namespace _123PayMVC.Controllers
                 if(photo != null)
                 {
                     string uploadsFolder = Path.Combine(hostingEnvironment.WebRootPath, "images");
-                    newFileName = photo.FileName + "_" + Guid.NewGuid().ToString();
+                    newFileName = Guid.NewGuid().ToString() + "_" + photo.FileName;
                     string filePath = Path.Combine(uploadsFolder, newFileName);
                     photo.CopyTo(new FileStream(filePath, FileMode.Create));
                 }
