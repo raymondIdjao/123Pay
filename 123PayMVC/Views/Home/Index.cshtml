@@ -1,0 +1,69 @@
+﻿@model IEnumerable<_123PayMVC.ViewModels.AttachPaymentRequest>
+@{
+    ViewData["Title"] = "Home Page";
+    tblPaymentRequests processRequest = new tblPaymentRequests();
+}
+<h2>Payment Requests</h2>
+
+<div class="container">
+    <table class="table table-striped table-sm">
+        <thead>
+            <tr>
+                <th hidden>PaymentRequestId</th>
+                <th>Transaction Date</th>
+                <th>Reference No.</th>
+                <th>Merchant</th>
+                <th>Account No.</th>
+                <th>Account Name</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var payment in Model)
+            {
+                <tr>
+                    <td hidden>@payment.PaymentRequestId</td>
+                    <td>@payment.TransactionDate.ToString("MM/dd/yyyy")</td>
+                    <td>@payment.ReferenceNo</td>
+                    <td>@payment.Merchant</td>
+                    <td>@payment.AccountNo</td>
+                    <td>@payment.AccountName</td>
+                    <td>@payment.Amount</td>
+                    <td>@payment.RequestStatus</td>
+                    <td>
+                        @if (payment.RequestStatus == "PENDING")
+                        {
+                            <a asp-controller="home" asp-action="DeclineRequest" asp-route-id="@payment.PaymentRequestId"
+                               class="btn btn-danger text-white btn-sm">Decline</a>
+                            <a asp-controller="home" asp-action="ProcessRequest" asp-route-id="@payment.PaymentRequestId"
+                               class="btn btn-success text-white btn-sm">Process</a>
+                        }
+                        else if (payment.RequestStatus == "PROCESSING")
+                        {
+                            <form method="post" asp-action="UploadFile" asp-controller="Home" enctype="multipart/form-data">
+                                <input value="@payment.PaymentRequestId" name="id" hidden />
+                                <input asp-for="@payment.Photo" name="photo" />
+                                <input type="submit" value="Upload" />
+                            </form>
+                        }
+                        else if (payment.RequestStatus == "FAILED" && payment.FileAttachmentPath == null)
+                        {
+                            <form method="post" asp-action="UploadFailedFile" asp-controller="Home" enctype="multipart/form-data">
+                                <input value="@payment.PaymentRequestId" name="id" hidden />
+                                <input asp-for="@payment.Photo" name="photo" />
+                                <input type="submit" value="Upload" />
+                            </form>
+                        }
+                        else
+                        {
+                            <span>@payment.FileAttachmentPath</span>
+                        }
+
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
