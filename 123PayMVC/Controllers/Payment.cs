@@ -77,8 +77,7 @@ namespace _123PayMVC.Controllers
                 return StatusCode(500, "an internal error has occured");
             }
 
-            var paymentRequests = __123PayDBContext.tblPaymentRequests.ToList();
-            return Ok(paymentRequests);
+            return Ok();
         }
     }
 }

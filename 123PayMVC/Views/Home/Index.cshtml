@@ -45,7 +45,7 @@
                             <form method="post" asp-action="UploadFile" asp-controller="Home" enctype="multipart/form-data">
                                 <input value="@payment.PaymentRequestId" name="id" hidden />
                                 <input asp-for="@payment.Photo" name="photo" />
-                                <input type="submit" value="Upload" />
+                                <input type="submit" value="Upload" class="btn btn-warning btn-sm text-white"/>
                             </form>
                         }
                         else if (payment.RequestStatus == "FAILED" && payment.FileAttachmentPath == null)
@@ -53,7 +53,7 @@
                             <form method="post" asp-action="UploadFailedFile" asp-controller="Home" enctype="multipart/form-data">
                                 <input value="@payment.PaymentRequestId" name="id" hidden />
                                 <input asp-for="@payment.Photo" name="photo" />
-                                <input type="submit" value="Upload" />
+                                <input type="submit" value="Upload" class="btn btn-warning btn-sm text-white" />
                             </form>
                         }
                         else
